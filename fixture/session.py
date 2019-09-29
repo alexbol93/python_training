@@ -1,5 +1,5 @@
 class SessionHelper:
-    def __init__(self,app):
+    def __init__(self, app):
         self.app = app
 
     def login(self, username, password):
@@ -15,3 +15,5 @@ class SessionHelper:
     def logout(self):
         wd = self.app.wd
         wd.find_element_by_link_text("Logout").click()
+        wd.find_element_by_name("user")
+
