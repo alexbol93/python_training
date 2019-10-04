@@ -1,5 +1,3 @@
-import time
-
 class ContactHelper:
 
     def __init__(self, app):
