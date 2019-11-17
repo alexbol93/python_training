@@ -1,17 +1,18 @@
 import re
 from random import randrange
+from model.contact import Contact
 
 
-def test_contact_info_on_home_page(app):
-    index = randrange(len(app.contact.get_contact_list()))
-    contact_from_home_page = app.contact.get_contact_list()[index]
-    contact_from_edit_page = app.contact.get_contact_info_from_edit_page(index)
-    assert contact_from_home_page.all_phones_from_home_page == merge_phones_like_on_home_page(contact_from_edit_page)
-    assert contact_from_home_page.all_emails_from_home_page == merge_emails_like_on_home_page(contact_from_edit_page)
-    assert contact_from_home_page.name == contact_from_edit_page.name
-    assert contact_from_home_page.l_name == contact_from_edit_page.l_name
-    assert contact_from_home_page.address == contact_from_edit_page.address
+def test_contact_info_on_home_page(app, db):
+    contacts_from_home_page = sorted(app.contact.get_contact_list(), key=Contact.id_or_max)
+    contacts_from_db = sorted(db.get_contact_list(), key=Contact.id_or_max)
 
+    for id in range(len(contacts_from_home_page)):
+        assert contacts_from_home_page[id].all_phones_from_home_page == merge_phones_like_on_home_page(contacts_from_db[id])
+        assert contacts_from_home_page[id].all_emails_from_home_page == merge_emails_like_on_home_page(contacts_from_db[id])
+        assert contacts_from_home_page[id].name == contacts_from_db[id].name
+        assert contacts_from_home_page[id].l_name == contacts_from_db[id].l_name
+        assert contacts_from_home_page[id].address == contacts_from_db[id].address
 
 
 def test_phones_on_contact_view_page(app):
