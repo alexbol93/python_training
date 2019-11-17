@@ -186,10 +186,18 @@ class ContactHelper:
         return Contact(home_phone=home_phone, mobile_phone=mobile_phone, work_phone=work_phone,
                        secondary_phone=secondary_phone)
 
-    def contact_in_group(self, contact_id, group_id):
+    def add_contact_in_group(self, contact_id, group_id):
         wd = self.app.wd
         self.app.open_home_page()
         wd.find_element_by_css_selector('input[id="%s"]' % contact_id)# Сначала ждем наш элемент
         wd.find_element_by_css_selector('input[id="%s"]' % contact_id).click()
         wd.find_element_by_css_selector('select[name="to_group"] > option[value="%s"]' % group_id).click()
         wd.find_element_by_name("add").click()
+
+    def del_user_from_group(self, contact_id, group_id):
+        wd = self.app.wd
+        self.app.open_home_page()
+        wd.find_element_by_xpath('//select[@name="group"]').click()
+        wd.find_element_by_xpath('//option[@value="%s"]' % group_id).click()
+        wd.find_element_by_xpath('//input[@id="%s"]' % contact_id).click()
+        wd.find_element_by_xpath('//input[@name="remove"]').click()

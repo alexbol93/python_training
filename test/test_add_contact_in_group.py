@@ -18,6 +18,6 @@ def test_add_contact_in_group(app, orm):
         contact = random.choice(contacts)
     else:
         contact = random.choice(contacts)
-    app.contact.contact_in_group(contact.id, group.id) # Добавляем контакт в выбраную группу
+    app.contact.add_contact_in_group(contact.id, group.id) # Добавляем контакт в выбраную группу
     contacts_in_group = orm.get_contacts_in_group(group)# Выгружаем список контактов в группе
     assert contact in contacts_in_group # Проверяем что контакт есть в группе
